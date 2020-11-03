@@ -1,3 +1,5 @@
+from textwrap import wrap
+
 # NOTE: Add amino acids and codons here
 AMINO_ACIDS = {
     "Methionine":       ["AUG"],
@@ -19,10 +21,13 @@ def proteins(strand):
     
     # parse strand by codons and create list of amino acids
     output = []
-    for c in [strand[i:i+3] for i in range(0, len(strand), 3)]:
-        if codons[c] == "STOP":
+    for c in wrap(strand, width=3):
+        amino = codons.get(c, None)
+        if amino is None:
+            raise Exception("Unrecognised codon: " & c)
+        elif amino == "STOP":
             break
         else:
-            output.append(codons[c])
+            output.append(amino)
     
     return(output)
