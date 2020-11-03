@@ -4,12 +4,13 @@ class Robot:
     usednames = set([""])
 
     def __init__(self):
-        self.name = self.newname()
+        self.name = Robot.newname()
     
     def reset(self):
-        self.name = self.newname()
+        self.name = Robot.newname()
 
-    def newname(self):
+    @staticmethod
+    def newname():
         name = ""
         while name in Robot.usednames:
             # Name schema: two random uppercase letters, three random digits
