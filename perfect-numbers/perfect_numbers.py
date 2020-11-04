@@ -1,10 +1,10 @@
-from sympy import divisors
+from sympy import proper_divisors
 
 def classify(number):
     if number < 1:
         raise ValueError("Input must be positive integer")
     
-    divsum = sum(divisors(number)[:-1])
+    divsum = sum(proper_divisors(number))
     if divsum < number:
         return "deficient"
     elif divsum > number:
