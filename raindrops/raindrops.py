@@ -7,10 +7,9 @@ RAINDROPS = {
 
 def convert(number):
     output = ""
-    divisors = sorted([d for d in RAINDROPS.keys()])
 
     # Iterate through divisors and append sounds for each that divides 'number'
-    for div in divisors:
+    for div in RAINDROPS:
         if number % div == 0:
             output += RAINDROPS[div]
     
