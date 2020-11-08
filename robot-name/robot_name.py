@@ -1,7 +1,7 @@
 import string, random
 
 class Robot:
-    usednames = set([""])
+    used_names = set()
 
     def __init__(self):
         self.name = Robot.newname()
@@ -11,11 +11,12 @@ class Robot:
 
     @staticmethod
     def newname():
-        name = ""
-        while name in Robot.usednames:
+        cont = True
+        while cont:
             # Name schema: two random uppercase letters, three random digits
-            name = random.choice(string.ascii_uppercase) \
-                    + random.choice(string.ascii_uppercase) \
+            name = ''.join(random.choices(string.ascii_uppercase, k=2)) \
                     + str(random.randint(0,999)).zfill(3)
-        Robot.usednames.add(name)
+            if name not in Robot.used_names:
+                cont = False
+        Robot.used_names.add(name)
         return name
