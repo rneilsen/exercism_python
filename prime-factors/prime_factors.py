@@ -1,2 +1,4 @@
+from sympy import factorint
+
 def factors(value):
-    pass
+    return factorint(value, multiple=True)
