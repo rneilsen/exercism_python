@@ -1,2 +1,5 @@
 def is_isogram(string):
-    pass
+    scrubbed = list(filter(lambda c: c.isalpha(), string.lower()))
+    return len(scrubbed) == len(set(scrubbed))
+
+is_isogram("thumbscrew-japingly")
