@@ -1,3 +1,3 @@
 def is_isogram(string):
-    scrubbed = list(filter(lambda c: c.isalpha(), string.lower()))
+    scrubbed = [c for c in string.lower() if c.isalpha()]
     return len(scrubbed) == len(set(scrubbed))
