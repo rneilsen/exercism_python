@@ -1,4 +1,4 @@
 def is_armstrong_number(number):
-    digits = [int(c) for c in str(number)]
+    digits = [int(digit) for digit in str(number)]
     num_digits = len(digits)
-    return (number == sum([d**num_digits for d in digits]))
+    return number == sum([digit**num_digits for digit in digits])
