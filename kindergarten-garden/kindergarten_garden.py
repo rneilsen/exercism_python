@@ -17,5 +17,5 @@ class Garden:
         
         student_plants = []
         for row in self.rows:
-            student_plants.extend([PLANTS[c] for c in row[pos:pos+2]])
+            student_plants.extend([PLANTS[pl] for pl in row[pos:pos+2]])
         return student_plants
