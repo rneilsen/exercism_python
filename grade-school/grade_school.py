@@ -11,7 +11,7 @@ class School:
     def roster(self):
         roster = []
         for grade in sorted(self.grades.keys()):
-            roster += sorted(self.grades[grade])
+            roster += self.grade(grade)
         return roster
 
     def grade(self, grade_number):
