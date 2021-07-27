@@ -14,7 +14,7 @@ def meetup(year, month, week, day_of_week):
     if len(week) == 3:  # catch ordinal dates '1st', '3rd' etc
         pos = int(week[0]) - 1
         if pos >= len(days):
-            raise MeetupDayException
+            raise MeetupDayException(f'{year}-{month} does not have {pos} weeks.')
         return date(*days[pos])
     elif week == 'last':
         return date(*days[-1])
@@ -26,6 +26,6 @@ def meetup(year, month, week, day_of_week):
         raise Exception(f'Invalid week: {week}')
 
 
-class MeetupDayException():
+class MeetupDayException(Exception):
     # ???
     pass
