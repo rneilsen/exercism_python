@@ -58,6 +58,24 @@ class GradeSchoolTest(unittest.TestCase):
         school = School()
         expected = []
         self.assertEqual(school.grade(1), expected)
+    
+    def test_modifying_grade_result_doesnt_mutate_original(self):
+        school = School()
+        school.add_student(name="Bob", grade=3)
+        school.add_student(name="Alice", grade=3)
+        school.add_student(name="Charlie", grade=2)
+        initial_result = school.grade(3)
+        initial_result.append("Xavier")
+        self.assertNotEqual(school.grade(3), initial_result)
+    
+    def test_modifying_roster_result_doesnt_mutate_original(self):
+        school = School()
+        school.add_student(name="Bob", grade=3)
+        school.add_student(name="Alice", grade=3)
+        school.add_student(name="Charlie", grade=2)
+        initial_result = school.roster()
+        initial_result.append("Xavier")
+        self.assertNotEqual(school.roster(), initial_result)
 
 
 if __name__ == "__main__":
