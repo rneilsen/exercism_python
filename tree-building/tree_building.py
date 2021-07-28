@@ -14,11 +14,9 @@ def BuildTree(records):
     root = None
     records.sort(key=lambda x: x.record_id)
     ordered_id = [i.record_id for i in records]
-    if records:
-        if ordered_id[-1] != len(ordered_id) - 1:
-            raise ValueError('Tree must be continuous')
-        if ordered_id[0] != 0:
-            raise ValueError('Tree must start with id 0')
+    if ordered_id != list(range(len(records))):
+        raise ValueError('IDs must be continuous starting from 0')
+
     trees = []
     parent = {}
     for i in range(len(ordered_id)):
