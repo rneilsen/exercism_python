@@ -8,9 +8,12 @@ from sieve import primes
 class SieveTest(unittest.TestCase):
     def test_no_primes_under_two(self):
         self.assertEqual(primes(1), [])
-
+    
     def test_find_first_prime(self):
         self.assertEqual(primes(2), [2])
+
+    def test_find_first_two_primes(self):
+        self.assertEqual(primes(3), [2, 3])
 
     def test_find_primes_up_to_10(self):
         self.assertEqual(primes(10), [2, 3, 5, 7])
