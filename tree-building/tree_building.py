@@ -13,7 +13,6 @@ class Node:
 def BuildTree(records):
     root = None
     records.sort(key=lambda x: x.record_id)
-    ordered_id = [i.record_id for i in records]
     if [r.record_id for r in records] != list(range(len(records))):
         raise ValueError('Record IDs must be continuous starting from 0')
 
@@ -29,7 +28,7 @@ def BuildTree(records):
             raise ValueError('Parent id must be lower than child id')
         trees.append(Node(r.record_id))
 
-    for i in range(len(ordered_id)):
+    for i in range(len(records)):
         for j in trees:
             if i == j.node_id:
                 parent = j
