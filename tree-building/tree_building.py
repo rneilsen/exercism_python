@@ -14,23 +14,21 @@ def BuildTree(records):
     root = None
     records.sort(key=lambda x: x.record_id)
     ordered_id = [i.record_id for i in records]
-    if ordered_id != list(range(len(records))):
-        raise ValueError('IDs must be continuous starting from 0')
+    if [r.record_id for r in records] != list(range(len(records))):
+        raise ValueError('Record IDs must be continuous starting from 0')
 
     trees = []
     parent = {}
-    for i in range(len(ordered_id)):
-        for j in records:
-            if ordered_id[i] == j.record_id:
-                if j.record_id == 0:
-                    if j.parent_id != 0:
-                        raise ValueError('Root node cannot have a parent')
-                if j.record_id < j.parent_id:
-                    raise ValueError('Parent id must be lower than child id')
-                if j.record_id == j.parent_id:
-                    if j.record_id != 0:
-                        raise ValueError('Tree is a cycle')
-                trees.append(Node(ordered_id[i]))
+
+    for r in records:
+        if r.record_id == 0 and r.parent_id != 0:
+            raise ValueError('Root node cannot have a parent')
+        elif r.record_id != 0 and r.record_id == r.parent_id:
+            raise ValueError('Non-root node cannot be its own parent')
+        elif r.record_id < r.parent_id:
+            raise ValueError('Parent id must be lower than child id')
+        trees.append(Node(r.record_id))
+
     for i in range(len(ordered_id)):
         for j in trees:
             if i == j.node_id:
