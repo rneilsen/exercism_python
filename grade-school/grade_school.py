@@ -17,4 +17,4 @@ class School:
         if grade_number >= len(self.grades):
             return []
         else:
-            return self.grades[grade_number]
+            return self.grades[grade_number].copy()
