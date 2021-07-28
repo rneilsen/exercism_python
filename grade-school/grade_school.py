@@ -1,18 +1,20 @@
+from bisect import insort
+from itertools import chain
+
 class School:
     def __init__(self):
-        self.grades = {}        # key = grade (int), val = students (set of strings)
+        self.grades = []      # 'Grade n' corresponds to self.grades[n]]
 
     def add_student(self, name, grade):
-        if grade not in self.grades:
-            self.grades[grade] = {name}
-        else:
-            self.grades[grade].add(name)
+        while len(self.grades) <= grade:
+            self.grades.append([])
+        insort(self.grades[grade], name)
 
     def roster(self):
-        roster = []
-        for grade in sorted(self.grades.keys()):
-            roster += self.grade(grade)
-        return roster
+        return list(chain(*self.grades))
 
     def grade(self, grade_number):
-        return sorted(self.grades.get(grade_number, []))
+        if grade_number >= len(self.grades):
+            return []
+        else:
+            return self.grades[grade_number]
