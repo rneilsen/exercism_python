@@ -3,7 +3,7 @@ class Luhn:
         self.num = card_num
         
     def valid(self):
-        chars = list(self.num.strip().replace(' ', ''))
+        chars = self.num.strip().replace(' ', '')
         if len(chars) <= 1:
             return False
         try:
