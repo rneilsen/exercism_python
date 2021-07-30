@@ -4,14 +4,17 @@ class Luhn:
         
     def valid(self):
         chars = list(self.num.strip().replace(' ', ''))
+        
         if len(chars) <= 1:
             return False
         for ch in chars:
             if not ch.isdigit(): return False
 
-        digits = [int(ch) for ch in chars]
-        digits.reverse()
+        def rec_luhn_sum(digits):
+            if len(digits) < 2:
+                return sum(digits)
+            return (digits[-1] + 2*digits[-2] - (9 if digits[-2] >= 5 else 0) +
+                    rec_luhn_sum(digits[:len(digits) - 2]))        
 
-        norm_digits = digits[::2]
-        doub_digits = [(2*d - 9 if d >= 5 else 2*d) for d in digits[1::2]]
-        return (sum(norm_digits + doub_digits) % 10 == 0)
+        digits = [int(ch) for ch in chars]
+        return (rec_luhn_sum(digits) % 10 == 0)
