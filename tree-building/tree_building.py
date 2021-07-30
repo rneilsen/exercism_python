@@ -11,14 +11,14 @@ class Node:
 
 
 def BuildTree(records):
-    root = None
+    if len(records) == 0:
+        return None
+    
     records.sort(key=lambda x: x.record_id)
     if [r.record_id for r in records] != list(range(len(records))):
         raise ValueError('Record IDs must be continuous starting from 0')
-
-    trees = []
-    parent = {}
-
+    
+    nodes = []
     for r in records:
         if r.record_id == 0 and r.parent_id != 0:
             raise ValueError('Root node cannot have a parent')
@@ -26,20 +26,11 @@ def BuildTree(records):
             raise ValueError('Non-root node cannot be its own parent')
         elif r.record_id < r.parent_id:
             raise ValueError('Parent id must be lower than child id')
-        trees.append(Node(r.record_id))
+        nodes.append(Node(r.record_id))
 
-    for i in range(len(records)):
-        for j in trees:
-            if i == j.node_id:
-                parent = j
-        for j in records:
-            if j.parent_id == i:
-                for k in trees:
-                    if k.node_id == 0:
-                        continue
-                    if j.record_id == k.node_id:
-                        child = k
-                        parent.children.append(child)
-    if len(trees) > 0:
-        root = trees[0]
-    return root
+    # build tree (works because records and nodes are sorted and continuous)
+    for i in range(1, len(nodes)):
+        parent = records[i].parent_id
+        nodes[parent].children.append(nodes[i])
+    
+    return nodes[0]
