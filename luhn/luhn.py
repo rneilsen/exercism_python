@@ -3,12 +3,13 @@ class Luhn:
         self.num = card_num
         
     def valid(self):
-        chars = self.num.strip().replace(' ', '')
-        if len(chars) <= 1:
-            return False
-        try:
-            digits = [int(ch) for ch in chars]
-        except ValueError:
+        digits = []
+        for ch in self.num:
+            if ch.isdigit():
+                digits.append(int(ch))
+            elif ch != ' ':
+                return False
+        if len(digits) <= 1:
             return False
         
         def rec_luhn_sum(digits):
