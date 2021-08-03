@@ -18,9 +18,11 @@ class Board:
         self.valid_spaces = set(product(range(self.width), range(self.height)))
 
     def get_space(self, x, y):
+        """Returns the content of a specific space on the board ('B', 'W', or '')"""
         return self.rows[y][x]
 
     def get_neighbours(self, x, y):
+        """Returns a set of the valid neighbours, as (x,y) tuples, of the given space"""
         return {(x-1,y), (x+1,y), (x,y+1), (x,y-1)}.intersection(self.valid_spaces)
 
     def territory(self, x, y):
@@ -41,7 +43,7 @@ class Board:
             raise ValueError("Invalid coordinates")
 
         if self.get_space(x,y) != '': 
-            # designated space is a stone, not territory
+            # designated space is a stone, not open territory
             return (NONE, set())
         
         checked = {(x,y)}
