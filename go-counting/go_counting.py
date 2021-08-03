@@ -1,3 +1,8 @@
+from itertools import product
+
+WHITE = 'W'
+BLACK = 'B'
+NONE = ' '
 
 class Board:
     """Count territories of each player in a Go game
@@ -7,7 +12,17 @@ class Board:
     """
 
     def __init__(self, board):
-        pass
+        rows = [[('' if ch==' ' else ch) for ch in row] for row in board]
+        self.width = len(board[0])
+        self.height = len(board)
+
+    def get_neighbours(self, x, y):
+        neighbours = set()
+        valid_x = set(range(self.width)).intersection({x-1, x+1})
+        neighbours.update(set([(xc, y) for xc in valid_x]))
+        valid_y = set(range(self.height)).intersection({y-1, y+1})
+        neighbours.update(set([(x, yc) for yc in valid_y]))
+        return neighbours
 
     def territory(self, x, y):
         """Find the owner and the territories given a coordinate on
@@ -23,7 +38,6 @@ class Board:
                         second being a set of coordinates, representing
                         the owner's territories.
         """
-        pass
 
     def territories(self):
         """Find the owners and the territories of the whole board
@@ -37,3 +51,4 @@ class Board:
                         of coordinates owned by the owner.
         """
         pass
+

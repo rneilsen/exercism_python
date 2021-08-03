@@ -6,6 +6,41 @@ from go_counting import Board, WHITE, BLACK, NONE
 
 
 class GoCountingTest(unittest.TestCase):
+    def test_get_neighbours_middle(self):
+        board = Board(["BBBBBB", "BBBBBB", "BBBBBB", "BBBBBB", "BBBBBB"])
+        expected = {(1,3), (3,3), (2,2), (2,4)}
+        self.assertSetEqual(expected, board.get_neighbours(2,3))
+
+    def test_get_neighbours_left_edge(self):
+        board = Board(["BBBBBB", "BBBBBB", "BBBBBB", "BBBBBB", "BBBBBB"])
+        expected = {(0,2), (0,4), (1,3)}
+        self.assertSetEqual(expected, board.get_neighbours(0,3))
+
+    def test_get_neighbours_top_edge(self):
+        board = Board(["BBBBBB", "BBBBBB", "BBBBBB", "BBBBBB", "BBBBBB"])
+        expected = {(2,1), (1,0), (3,0)}
+        self.assertSetEqual(expected, board.get_neighbours(2,0))
+
+    def test_get_neighbours_top_left_corner(self):
+        board = Board(["BBBBBB", "BBBBBB", "BBBBBB", "BBBBBB", "BBBBBB"])
+        expected = {(0,1), (1,0)}
+        self.assertSetEqual(expected, board.get_neighbours(0,0))
+
+    def test_get_neighbours_right_edge(self):
+        board = Board(["BBBBBB", "BBBBBB", "BBBBBB", "BBBBBB", "BBBBBB"])
+        expected = {(5,2), (5,4), (4,3)}
+        self.assertSetEqual(expected, board.get_neighbours(5,3))
+
+    def test_get_neighbours_bottom_edge(self):
+        board = Board(["BBBBBB", "BBBBBB", "BBBBBB", "BBBBBB", "BBBBBB"])
+        expected = {(2,3), (3,4), (1,4)}
+        self.assertSetEqual(expected, board.get_neighbours(2,4))
+
+    def test_get_neighbours_bottom_right_corner(self):
+        board = Board(["BBBBBB", "BBBBBB", "BBBBBB", "BBBBBB", "BBBBBB"])
+        expected = {(4,4), (5,3)}
+        self.assertSetEqual(expected, board.get_neighbours(5,4))
+
     def test_black_corner_territory_on_5x5_board(self):
         board = Board(["  B  ", " B B ", "B W B", " W W ", "  W  "])
         stone, territory = board.territory(x=0, y=1)
