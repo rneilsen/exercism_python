@@ -15,17 +15,13 @@ class Board:
         self.rows = [[(NONE if ch==' ' else ch) for ch in row] for row in board]
         self.width = len(board[0])
         self.height = len(board)
+        self.valid_spaces = set(product(range(self.width), range(self.height)))
 
     def get_space(self, x, y):
         return self.rows[y][x]
 
     def get_neighbours(self, x, y):
-        neighbours = set()
-        valid_x = set(range(self.width)).intersection({x-1, x+1})
-        neighbours.update(set([(xc, y) for xc in valid_x]))
-        valid_y = set(range(self.height)).intersection({y-1, y+1})
-        neighbours.update(set([(x, yc) for yc in valid_y]))
-        return neighbours
+        return {(x-1,y), (x+1,y), (x,y+1), (x,y-1)}.intersection(self.valid_spaces)
 
     def territory(self, x, y):
         """Find the owner and the territories given a coordinate on
@@ -79,7 +75,7 @@ class Board:
                         of coordinates owned by the owner.
         """
         terrs = {NONE: set(), WHITE: set(), BLACK: set()}
-        unchecked = set(product(range(self.width), range(self.height)))
+        unchecked = self.valid_spaces.copy()
         while len(unchecked) > 0:
             space = unchecked.pop()
             (owner, terr) = self.territory(*space)
