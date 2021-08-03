@@ -39,7 +39,7 @@ class Board:
                         second being a set of coordinates, representing
                         the owner's territories.
         """
-        if x not in range(self.width) or y not in range(self.height):
+        if (x,y) not in self.valid_spaces:
             raise ValueError("Invalid coordinates")
 
         if self.get_space(x,y) != '': 
@@ -47,7 +47,7 @@ class Board:
             return (NONE, set())
         
         checked = {(x,y)}
-        territory = checked.copy()
+        terr = checked.copy()
         unchecked = self.get_neighbours(x,y)
         owners = set()
         while len(unchecked) > 0:
@@ -55,14 +55,14 @@ class Board:
             space_cont = self.get_space(*space)
             if space_cont == NONE:
                 unchecked.update(self.get_neighbours(*space).difference(checked))
-                territory.add(space)
+                terr.add(space)
             else:
                 owners.add(space_cont)
             checked.add(space)
         if len(owners) == 1:
-            return (owners.pop(), territory)
+            return (owners.pop(), terr)
         else:
-            return (NONE, territory)
+            return (NONE, terr)
 
 
     def territories(self):
