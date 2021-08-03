@@ -46,6 +46,25 @@ class Board:
             # designated space is a stone, not territory
             return (NONE, set())
         
+        checked = {(x,y)}
+        territory = checked.copy()
+        unchecked = self.get_neighbours(x,y)
+        owners = set()
+        while len(unchecked) > 0:
+            space = unchecked.pop()
+            space_cont = self.get_space(*space)
+            if space_cont == NONE:
+                unchecked.update(self.get_neighbours(*space).difference(checked))
+                territory.add(space)
+            else:
+                owners.add(space_cont)
+            checked.add(space)
+        if len(owners) == 1:
+            return (owners.pop(), territory)
+        else:
+            return (NONE, territory)
+
+
     def territories(self):
         """Find the owners and the territories of the whole board
 
