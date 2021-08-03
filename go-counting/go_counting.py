@@ -1,3 +1,5 @@
+from itertools import product
+
 WHITE = 'W'
 BLACK = 'B'
 NONE = ''
@@ -10,7 +12,7 @@ class Board:
     """
 
     def __init__(self, board):
-        self.rows = [[('' if ch==' ' else ch) for ch in row] for row in board]
+        self.rows = [[(NONE if ch==' ' else ch) for ch in row] for row in board]
         self.width = len(board[0])
         self.height = len(board)
 
@@ -76,5 +78,12 @@ class Board:
                         , i.e. "W", "B", "".  The value being a set
                         of coordinates owned by the owner.
         """
-        pass
+        terrs = {NONE: set(), WHITE: set(), BLACK: set()}
+        unchecked = set(product(range(self.width), range(self.height)))
+        while len(unchecked) > 0:
+            space = unchecked.pop()
+            (owner, terr) = self.territory(*space)
+            terrs[owner].update(terr)
+            unchecked.difference_update(terr)
+        return terrs
 
