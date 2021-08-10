@@ -45,5 +45,3 @@ def parse(markdown):
     if in_list:
         res += '</ul>'
     return res
-
-parse("# Start a list\n* Item 1\n* Item 2\nEnd a list"),
