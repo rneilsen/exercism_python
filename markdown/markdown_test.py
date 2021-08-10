@@ -78,6 +78,18 @@ class MarkdownTest(unittest.TestCase):
             parse("# Start a list\n* Item 1\n* Item 2\nEnd a list"),
             "<h1>Start a list</h1><ul><li>Item 1</li><li>Item 2</li></ul><p>End a list</p>",
         )
+    
+    def test_multiple_italics(self):
+        self.assertEqual(
+            parse("_this is italicised_ but this is not _but this is_"),
+            "<p><em>this is italicised</em> but this is not <em>but this is</em></p>"
+        )
+    
+    def test_multiple_bold(self):
+        self.assertEqual(
+            parse("__this is bold__ but this is not __but this is__"),
+            "<p><strong>this is bold</strong> but this is not <strong>but this is</strong></p>"
+        )
 
 
 if __name__ == "__main__":
