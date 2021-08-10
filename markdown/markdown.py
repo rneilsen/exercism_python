@@ -7,12 +7,12 @@ def parse(markdown):
     in_list = False
     in_list_append = False
     for i in lines:
-        if re.match('###### (.*)', i) is not None:
-            i = '<h6>' + i[7:] + '</h6>'
-        elif re.match('## (.*)', i) is not None:
-            i = '<h2>' + i[3:] + '</h2>'
-        elif re.match('# (.*)', i) is not None:
-            i = '<h1>' + i[2:] + '</h1>'
+        # Detect headers
+        header_match = re.match('(#+) (.*)', i)
+        if header_match:
+            ht = str(len(header_match[1]))
+            i = f'<h{ht}>' + header_match[2] + f'</h{ht}>'
+
         m = re.match(r'\* (.*)', i)
         if m:
             if not in_list:
