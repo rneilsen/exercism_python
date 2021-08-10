@@ -2,14 +2,14 @@ import re
 
 
 def parse(markdown):
-    lines = markdown.split('\n')
+    lines = markdown.splitlines()
     res = ''
     in_list = False
-    in_list_append = False
+    end_list = False
     for line in lines:
-        in_para = True  # assume all lines are para until detect list or header
+        in_para = True  # assume all lines are para until detect list or heading
 
-        # Detect headers
+        # Detect headings
         if ( m := re.match('(#+) (.*)', line) ):
             in_para = False
             ht = str(len(m.group(1)))
@@ -31,15 +31,16 @@ def parse(markdown):
                 in_list = True
                 line = '<ul>' + line
         elif in_list:
-                in_list_append = True
                 in_list = False
+                end_list = True
 
         if in_para:
             line = '<p>' + line + '</p>'
         
-        if in_list_append:
+        if end_list:
             line = '</ul>' + line
-            in_list_append = False
+            end_list = False
+
         res += line
 
     if in_list:
