@@ -1,9 +1,12 @@
 import re
 
 
+blocks = [re.compile('(.*)__(.*?)__(.*)')]
+
+
 def parse(markdown):
     lines = markdown.splitlines()
-    res = ''
+    res_lines = []
     in_list = False
     end_list = False
     for line in lines:
@@ -41,8 +44,8 @@ def parse(markdown):
             line = '</ul>' + line
             end_list = False
 
-        res += line
+        res_lines.append(line)
 
     if in_list:
-        res += '</ul>'
-    return res
+        res_lines.append('</ul>')
+    return ''.join(res_lines)
