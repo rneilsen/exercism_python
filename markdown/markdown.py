@@ -1,6 +1,15 @@
 import re
 
+formats = [
+        (r'(.*?)__(.*?)__(.*?)', r'\g<1><strong>\g<2></strong>\g<3>'),
+        (r'(.*?)_(.*?)_(.*?)', r'\g<1><em>\g<2></em>\g<3>'),
+        ]
+
 def parse(markdown):
+    # sub all formatting blocks like bold and italics
+    for (pattern, repl) in formats:
+        markdown = re.sub(pattern, repl, markdown)
+
     lines = markdown.splitlines()
     res_lines = []
     in_list = False
@@ -13,12 +22,6 @@ def parse(markdown):
             in_para = False
             ht = str(len(m.group(1)))
             line = f'<h{ht}>' + m.group(2) + f'</h{ht}>'
-
-        # Detect bold
-        line = re.sub('(.*?)__(.*?)__(.*?)', r'\g<1><strong>\g<2></strong>\g<3>', line)
-
-        # Detect italic
-        line = re.sub('(.*?)_(.*?)_(.*?)', r'\g<1><em>\g<2></em>\g<3>', line)
 
         # Detect list items
         if ( m := re.match(r'\* (.*)', line) ):
