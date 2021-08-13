@@ -1,9 +1,5 @@
 import re
 
-
-blocks = [re.compile('(.*)__(.*?)__(.*)')]
-
-
 def parse(markdown):
     lines = markdown.splitlines()
     res_lines = []
@@ -19,13 +15,11 @@ def parse(markdown):
             line = f'<h{ht}>' + m.group(2) + f'</h{ht}>'
 
         # Detect bold
-        while ( m := re.match('(.*)__(.*?)__(.*)', line) ):
-            line = m.group(1) + '<strong>' + m.group(2) + '</strong>' + m.group(3)
-        
+        line = re.sub('(.*?)__(.*?)__(.*?)', r'\g<1><strong>\g<2></strong>\g<3>', line)
+
         # Detect italic
-        while ( m := re.match('(.*)_(.*?)_(.*)', line) ):
-            line = m.group(1) + '<em>' + m.group(2) + '</em>' + m.group(3)
-        
+        line = re.sub('(.*?)_(.*?)_(.*?)', r'\g<1><em>\g<2></em>\g<3>', line)
+
         # Detect list items
         if ( m := re.match(r'\* (.*)', line) ):
             in_para = False
