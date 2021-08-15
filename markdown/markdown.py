@@ -1,48 +1,18 @@
 import re
 
 formats = [
-        ( r'(.*?)__(.*?)__(.*?)' ,  r'\g<1><strong>\g<2></strong>\g<3>' ),
-        ( r'(.*?)_(.*?)_(.*?)' ,    r'\g<1><em>\g<2></em>\g<3>' )
-        ]
+        ( '(.*?)__(.*?)__(.*?)' ,       r'\g<1><strong>\g<2></strong>\g<3>' ),
+        ( '(.*?)_(.*?)_(.*?)' ,         r'\g<1><em>\g<2></em>\g<3>' ),
+        ( r'(?m)^([^\*#].*)' ,          r'<p>\g<1></p>' ),
+        ( r'(?m)^\* (.*)$' ,            r'<li>\g<1></li>' ),
+        ( r'(?m)(((^<li>.*$)\n?)+)' ,   r'<ul>\g<1></ul>')
+        ] 
+
+# construct additional regex formats for each heading type
+formats += [('(?m)^' + ('#'*n) + ' (.*)$', f'<h{n}>\\g<1></h{n}>') for n in range(1, 7)]
 
 def parse(markdown):
-    # sub all formatting blocks like bold and italics
     for (pattern, repl) in formats:
         markdown = re.sub(pattern, repl, markdown)
-
-    lines = markdown.splitlines()
-    res_lines = []
-    in_list = False
-    end_list = False
-    for line in lines:
-        in_para = True  # assume all lines are para until detect list or heading
-
-        # Detect headings
-        if ( hm := re.match('(#+) (.*)', line) ):
-            in_para = False
-            ht = str(len(hm.group(1)))
-            line = f'<h{ht}>' + hm.group(2) + f'</h{ht}>'
-
-        # Detect list items
-        if ( lm := re.match(r'\* (.*)', line) ):
-            in_para = False
-            line = '<li>' + lm.group(1) + '</li>'
-            if not in_list:
-                in_list = True
-                line = '<ul>' + line
-        elif in_list:
-                in_list = False
-                end_list = True
-
-        if in_para:
-            line = '<p>' + line + '</p>'
-        
-        if end_list:
-            line = '</ul>' + line
-            end_list = False
-
-        res_lines.append(line)
-
-    if in_list:
-        res_lines.append('</ul>')
-    return ''.join(res_lines)
+    
+    return markdown.replace('\n', '')
