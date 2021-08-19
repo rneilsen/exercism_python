@@ -16,9 +16,12 @@ def answer(question):
 
     while len(pieces) > 1:
         if len(pieces) < 3:
-            raise ValueError("Unknown question")
-        
-        pieces = [str(eval(''.join(pieces[0:3])))] + pieces[3:]
+            raise ValueError("Invalid format")
+        if  ( pieces[1] in ops.values()
+                and pieces[0].lstrip('-').isnumeric() 
+                and pieces[2].lstrip('-').isnumeric() ) :
+            pieces = [str(eval(''.join(pieces[0:3])))] + pieces[3:]
+        else:    
+            raise ValueError("Invalid format")
 
     return int(pieces[0])
-    
