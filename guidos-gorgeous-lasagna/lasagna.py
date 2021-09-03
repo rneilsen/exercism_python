@@ -18,4 +18,4 @@ def preparation_time_in_minutes(num_layers):
     return num_layers * PREPARATION_TIME
 
 def elapsed_time_in_minutes(number_of_layers, elapsed_bake_time):
-    pass
+    return preparation_time_in_minutes(number_of_layers) + elapsed_bake_time
