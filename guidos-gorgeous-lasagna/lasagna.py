@@ -3,7 +3,7 @@ PREPARATION_TIME = 2
 
 
 # TODO: define the 'bake_time_remaining()' function
-def bake_time_remaining():
+def bake_time_remaining(elapsed_bake_time):
     '''
     :param elapsed_bake_time: int baking time already elapsed
     :return: int remaining bake time derived from 'EXPECTED_BAKE_TIME'
@@ -12,8 +12,7 @@ def bake_time_remaining():
     an argument and returns how many minutes the lasagna still needs to bake
     based on the `EXPECTED_BAKE_TIME`.
     '''
-
-    pass
+    return EXPECTED_BAKE_TIME - elapsed_bake_time
 
 def preparation_time_in_minutes(num_layers):
     return num_layers * PREPARATION_TIME
