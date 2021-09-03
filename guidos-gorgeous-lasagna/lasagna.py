@@ -1,5 +1,5 @@
-# TODO: define the 'EXPECTED_BAKE_TIME' constant
-# TODO: define the 'PREPARATION_TIME' constant
+EXPECTED_BAKE_TIME = 40
+PREPARATION_TIME = 2
 
 
 # TODO: define the 'bake_time_remaining()' function
@@ -15,6 +15,8 @@ def bake_time_remaining():
 
     pass
 
-# TODO: define the 'preparation_time_in_minutes()' function
+def preparation_time_in_minutes(num_layers):
+    pass
 
-# TODO: define the 'elapsed_time_in_minutes()' function
+def elapsed_time_in_minutes(number_of_layers, elapsed_bake_time):
+    pass
