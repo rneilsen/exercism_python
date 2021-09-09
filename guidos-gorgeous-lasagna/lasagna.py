@@ -1,8 +1,9 @@
+'''Module that calculates some times involved in steps making a lasagna'''
+
 EXPECTED_BAKE_TIME = 40
 PREPARATION_TIME = 2
 
 
-# TODO: define the 'bake_time_remaining()' function
 def bake_time_remaining(elapsed_bake_time):
     '''
     :param elapsed_bake_time: int baking time already elapsed
