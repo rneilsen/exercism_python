@@ -15,4 +15,6 @@ def convert(input_grid):
     if len(set(lengths)) != 1 or lengths[0] % 3 != 0:
         raise ValueError("Invalid input grid size")
 
-    return DIGITS['\n'.join(input_grid)]
+
+
+    return DIGITS.get('\n'.join(input_grid), '?')
