@@ -4,8 +4,11 @@ RAW_DIGITS = '''
 | |  | _| _||_||_ |_   ||_||_|
 |_|  ||_  _|  | _||_|  ||_| _|
                               '''
-DIGITS = {'\n'.join( [row[3*n:3*n+3] for row in RAW_DIGITS.splitlines()[1:]] ) : str(n)
-        for n in range(10)}
+
+DIGITS = {}
+for n in range(10):
+    digit_rows = [row[3*n:3*n+3] for row in RAW_DIGITS.splitlines()[1:]]
+    DIGITS['\n'.join(digit_rows)] = str(n)
 
 def convert(input_grid):
     if len(input_grid) < 4 or len(input_grid) % 4 != 0:
