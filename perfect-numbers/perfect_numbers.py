@@ -1,4 +1,12 @@
-from sympy import proper_divisors
+try:
+    from sympy import proper_divisors
+except ImportError:
+    def proper_divisors(number):
+        divisors = []
+        for n in range(1, number):
+            if number % n == 0:
+                divisors.append(n)
+        return divisors
 
 def classify(number):
     if number < 1:
