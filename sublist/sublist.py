@@ -13,11 +13,24 @@ You can learn more here: https://en.wikipedia.org/wiki/Enumerated_type
 
 # Possible sublist categories.
 # Change the values as you see fit.
-SUBLIST = None
-SUPERLIST = None
-EQUAL = None
-UNEQUAL = None
+SUBLIST = 2
+SUPERLIST = 3
+EQUAL = 1
+UNEQUAL = 0
 
 
 def sublist(list_one, list_two):
-    pass
+    if list_one == list_two: return EQUAL
+    
+    swapped = False
+    if len(list_one) > len(list_two):
+        swapped = True
+        (list_one, list_two) = (list_two, list_one)
+    
+    (len_one, len_two) = (len(list_one), len(list_two))
+
+    for i in range(len_two - len_one + 1):
+        if list_two[i:i+len_one] == list_one:
+            return (SUPERLIST if swapped else SUBLIST)
+    
+    return UNEQUAL
