@@ -1,3 +1,5 @@
+"""Offers some currency exchange functions"""
+
 def exchange_money(budget, exchange_rate):
     """
 
@@ -53,9 +55,9 @@ def exchangeable_value(budget, exchange_rate, spread, denomination):
     """
 
     return  int(get_value_of_bills(
-                denomination, 
+                denomination,
                 get_number_of_bills(
-                    exchange_money(budget, exchange_rate * (1 + spread / 100)), 
+                    exchange_money(budget, exchange_rate * (1 + spread / 100)),
                     denomination)))
 
 
@@ -69,5 +71,5 @@ def non_exchangeable_value(budget, exchange_rate, spread, denomination):
     :return: int non-exchangeable value.
     """
 
-    return int(exchange_money(budget, exchange_rate * (1 + spread / 100)) - 
+    return int(exchange_money(budget, exchange_rate * (1 + spread / 100)) -
             exchangeable_value(budget, exchange_rate, spread, denomination))
