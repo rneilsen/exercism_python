@@ -39,7 +39,7 @@ def get_number_of_bills(budget, denomination):
     :return: int - number of bills after exchanging all your money.
     """
 
-    pass
+    return budget // denomination
 
 
 def exchangeable_value(budget, exchange_rate, spread, denomination):
@@ -52,7 +52,11 @@ def exchangeable_value(budget, exchange_rate, spread, denomination):
     :return: int - maximum value you can get.
     """
 
-    pass
+    return  int(get_value_of_bills(
+                denomination, 
+                get_number_of_bills(
+                    exchange_money(budget, exchange_rate * (1 + spread / 100)), 
+                    denomination)))
 
 
 def non_exchangeable_value(budget, exchange_rate, spread, denomination):
@@ -65,4 +69,5 @@ def non_exchangeable_value(budget, exchange_rate, spread, denomination):
     :return: int non-exchangeable value.
     """
 
-    pass
+    return int(exchange_money(budget, exchange_rate * (1 + spread / 100)) - 
+            exchangeable_value(budget, exchange_rate, spread, denomination))
