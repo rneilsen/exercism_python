@@ -14,10 +14,11 @@ def convert(input_grid):
         raise ValueError("Input does not have at least 4 rows")
     if len(input_grid) % 4 != 0:
         raise ValueError("Input does not have multiple of 4 rows")
-    
-    big_rows = [input_grid[n:n+4] for n in range(0, len(input_grid), 4)]
+        
     result = ''
-    for big_row in big_rows:
+    for n in range(0, len(input_grid), 4):
+        big_row = input_grid[n:n+4]
+
         # check all lines in this big_row are same mult-of-3 length
         lengths = [len(line) for line in big_row]
         if len(set(lengths)) != 1:
@@ -31,7 +32,7 @@ def convert(input_grid):
             result += DIGITS.get('\n'.join(big_digit), '?')
         
         result += ','
-    else:
-        result = result[:-1]    # strip final comma
-
+    
+    result = result[:-1]    # strip final comma
+    
     return result
