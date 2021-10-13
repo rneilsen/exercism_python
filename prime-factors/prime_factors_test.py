@@ -29,6 +29,9 @@ class PrimeFactorsTest(unittest.TestCase):
     def test_factors_include_a_large_prime(self):
         self.assertEqual(factors(93819012551), [11, 9539, 894119])
 
+    def test_factors_giant_product(self):
+        self.assertEqual(factors(8347248), [2, 2, 2, 2, 3, 3, 7, 7, 7, 13, 13])
+
 
 if __name__ == "__main__":
     unittest.main()
