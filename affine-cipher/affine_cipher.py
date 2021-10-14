@@ -25,3 +25,14 @@ def encode(plain_text, a, b):
 def decode(ciphered_text, a, b):
     if gcd(a, M) != 1:
         raise ValueError("a must be coprime to m")
+    
+    a_inv = pow(a, -1, M)
+
+    plain_text = ""
+    for ch in ciphered_text.lower().replace(' ', ''):
+        if ch in ALPHABET:
+            plain_text += NUMALPH[(a_inv * (ALPHNUM[ch] - b)) % M]
+        elif ch in '0123456789':
+            plain_text += ch
+    
+    return plain_text
