@@ -23,7 +23,8 @@ def make_word_groups(vocab_words):
      by ' :: '.
     """
 
-    pass
+    prefix = vocab_words[0]
+    return " :: ".join([prefix] + [prefix + word for word in vocab_words[1:]])
 
 
 def remove_suffix_ness(word):
@@ -35,7 +36,11 @@ def remove_suffix_ness(word):
     This function takes in a word and returns the base word with `ness` removed.
     """
 
-    pass
+    root = word[:-4]
+    if root[-1] == 'i':
+        return root[:-1] + 'y'
+    else:
+        return root
 
 
 def noun_to_verb(sentence, index):
@@ -51,4 +56,6 @@ def noun_to_verb(sentence, index):
     adjective as a verb.
     """
 
-    pass
+    word = sentence.split(' ')[index]
+    word = ''.join([ch for ch in word if ch.isalpha()])
+    return word + 'en'
