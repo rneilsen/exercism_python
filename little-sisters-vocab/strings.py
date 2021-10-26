@@ -1,3 +1,6 @@
+"""Implement some vocabulary tasks for the little sister's vocab
+exercise on exercism.org"""
+
 def add_prefix_un(word):
     """
 
@@ -39,8 +42,7 @@ def remove_suffix_ness(word):
     root = word[:-4]
     if root[-1] == 'i':
         return root[:-1] + 'y'
-    else:
-        return root
+    return root
 
 
 def noun_to_verb(sentence, index):
