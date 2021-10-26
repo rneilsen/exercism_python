@@ -9,7 +9,7 @@ ALPHNUM = {ALPHABET[n]: n for n in range(M)}
 
 def encode(plain_text, a, b):
     if gcd(a, M) != 1:
-        raise ValueError("a must be coprime to m")
+        raise ValueError("a and m must be coprime.")
     
     cipher_text = ""
     for ch in plain_text.lower():
@@ -24,7 +24,7 @@ def encode(plain_text, a, b):
 
 def decode(ciphered_text, a, b):
     if gcd(a, M) != 1:
-        raise ValueError("a must be coprime to m")
+        raise ValueError("a and m must be coprime.")
     
     a_inv = pow(a, -1, M)
 
