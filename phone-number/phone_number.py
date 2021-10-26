@@ -1,6 +1,6 @@
 class PhoneNumber:
     def __init__(self, number):
-        scrubbed = ''.join(filter(lambda x: x.isdigit(), number))
+        scrubbed = ''.join([ch for ch in number if ch.isdigit()])
         if scrubbed[0] == '1':
             scrubbed = scrubbed[1:]
         
