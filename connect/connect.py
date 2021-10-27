@@ -37,4 +37,29 @@ class ConnectGame:
 
 
     def get_winner(self):
-        pass
+        # Check for O win (top to bottom)
+        top_row = {(0,i) for i in range(self.width)}
+        bottom_row = {(self.height - 1, i) for i in range(self.width)}
+        while len(top_row) > 0:
+            (row, col) = top_row.pop()
+            if self.board[row][col] == 'O':
+                block = self.get_connected_alike_block(row, col)
+                if len(block.intersection(bottom_row)) != 0:
+                    return "O"
+                else:
+                    top_row.difference_update(block)
+
+        # Check for X win (left to right)
+        left_col = {(i, 0) for i in range(self.height)}
+        right_col = {(i, self.width - 1) for i in range(self.height)}
+        while len(left_col) > 0:
+            (row, col) = left_col.pop()
+            if self.board[row][col] == 'X':
+                block = self.get_connected_alike_block(row, col)
+                if len(block.intersection(right_col)) != 0:
+                    return "X"
+                else:
+                    left_col.difference_update(block)
+        
+        # No win yet
+        return ""
