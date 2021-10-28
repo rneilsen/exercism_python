@@ -43,11 +43,9 @@ def find_factors(num, min, max):
     if num is None:
         return []
     
-    factors = []
-    for i in range(min, max + 1):
-        if num % i == 0 and num // i in range(min, max + 1):
-            factors.append((i, num // i))
-    return factors
+    return [(i, num // i)
+            for i in range(min, max + 1)
+            if num % i == 0 and num // i in range(min, max + 1)]
 
 
 def is_palindrome(number):
