@@ -18,28 +18,39 @@ def rectangles_from_top_left(rows):
     top_row = rows[0]
 
     for j in range(1, len(top_row)):
-        match top_row[j]:
-            case '+':
-                # search the block below this section of the top row
-                num += rectangles_below([row[:j+1] for row in rows])
-            case '-':
-                continue
-            case _:
-                return num
+        if top_row[j] == '+':
+            # search the block below this section of the top row
+            num += rectangles_below([row[:j+1] for row in rows])
+        elif top_row[j] == '-':
+            continue
+        else:
+            return num
     return num
 
 
 def rectangles_below(rows):
     num = 0
     for i in range(1, len(rows)):
-        match (rows[i][0], rows[i][-1]):
-            case ('+', '+'):
-                # got all 4 corners, if bottom row is complete we've got one
-                if set(rows[i]).issubset({'+', '-'}):
-                    num += 1
-            case ('|', '|') | ('+', '|') | ('|', '+'):
-                continue
-            case _:
-                # one or the other side is broken, abandon this block
-                return num
+        if (rows[i][0], rows[i][-1]) == ('+', '+'):
+            # got all 4 corners, if bottom row is complete we've got one
+            if set(rows[i]).issubset({'+', '-'}):
+                num += 1
+        elif (rows[i][0], rows[i][-1]) in {('|', '|'), ('+', '|'), ('|', '+')}:
+            continue
+        else:
+            # one or the other side is broken, abandon this block
+            return num
     return num
+
+print(rectangles(
+                [
+                    "+---+--+----+",
+                    "|   +--+----+",
+                    "+---+--+    |",
+                    "|   +--+----+",
+                    "+---+--+--+-+",
+                    "+---+--+--+-+",
+                    "+------+  | |",
+                    "          +-+",
+                ]
+            ))
