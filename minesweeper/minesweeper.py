@@ -1,13 +1,12 @@
 from itertools import product
 
 def annotate(minefield):
-    # Function body starts here
     lengths = {len(row) for row in minefield}
     if len(lengths) > 1:
         raise ValueError("Invalid board - rows not equal length")
     if not set(''.join(minefield)).issubset({' ', '*'}):
         raise ValueError("Invalid characters in board")
-    
+
     annot_board = []
     for i in range(len(minefield)):
         new_row = []
@@ -19,13 +18,14 @@ def annotate(minefield):
                 new_row.append(' ' if adj_mines == 0 else str(adj_mines))
         annot_board.append(''.join(new_row))
     return annot_board
-    
-def count_adj_mines(minefield, rn, cn):
-    (ht, wd) = (len(minefield), len(minefield[0]))
+
+
+def count_adj_mines(minefield, row, col):
+    (height, width) = (len(minefield), len(minefield[0]))
     adj_mines = 0
     neighbour_spaces = product(
-            range(max(rn-1, 0), min(rn+2, ht)) , 
-            range(max(cn-1, 0), min(cn+2, wd)) )
+            range(max(row-1, 0), min(row+2, height)) ,
+            range(max(col-1, 0), min(col+2, width)) )
     for h, k in neighbour_spaces:
         adj_mines += (1 if minefield[h][k] == '*' else 0)
     return adj_mines
