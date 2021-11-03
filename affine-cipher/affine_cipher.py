@@ -15,7 +15,7 @@ def encode(plain_text, a, b):
     for ch in plain_text.lower():
         if ch in ALPHABET:
             cipher_text += NUMALPH[(a * ALPHNUM[ch] + b) % M]
-        elif ch in '0123456789':
+        elif ch.isnumeric():
             cipher_text += ch
         
     return ' '.join(cipher_text[i:i+GROUP_SIZE] 
@@ -32,7 +32,7 @@ def decode(ciphered_text, a, b):
     for ch in ciphered_text.lower().replace(' ', ''):
         if ch in ALPHABET:
             plain_text += NUMALPH[(a_inv * (ALPHNUM[ch] - b)) % M]
-        elif ch in '0123456789':
+        elif ch.isnumeric():
             plain_text += ch
     
     return plain_text
