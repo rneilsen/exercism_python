@@ -11,13 +11,8 @@ def encode(plain_text, a, b):
     if gcd(a, M) != 1:
         raise ValueError("a and m must be coprime.")
     
-    cipher_text = ""
-    for ch in plain_text.lower():
-        if ch in ALPHABET:
-            cipher_text += NUMALPH[(a * ALPHNUM[ch] + b) % M]
-        elif ch.isnumeric():
-            cipher_text += ch
-        
+    cipher_text = transcode(plain_text, a, b, lambda n, a, b: a * n + b)
+
     return ' '.join(cipher_text[i:i+GROUP_SIZE] 
             for i in range(0, len(cipher_text), GROUP_SIZE))
 
@@ -28,11 +23,14 @@ def decode(ciphered_text, a, b):
     
     a_inv = pow(a, -1, M)
 
-    plain_text = ""
-    for ch in ciphered_text.lower():
+    return transcode(ciphered_text, a_inv, b, lambda n, a, b: a * (n - b))
+
+
+def transcode(text, a, b, lookup_func):
+    trans_text = ""
+    for ch in text.lower():
         if ch in ALPHABET:
-            plain_text += NUMALPH[(a_inv * (ALPHNUM[ch] - b)) % M]
+            trans_text += NUMALPH[lookup_func(ALPHNUM[ch], a, b) % M]
         elif ch.isnumeric():
-            plain_text += ch
-    
-    return plain_text
+            trans_text += ch
+    return trans_text
