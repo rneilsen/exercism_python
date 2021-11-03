@@ -9,10 +9,10 @@ INTERVALS = {'m': 1, 'M': 2, 'A': 3}
 class Scale:
     def __init__(self, tonic):
         if tonic in FLAT_SCALES:
-            start = PITCHES_FL.index(tonic[0].upper() + tonic[1:])
+            start = PITCHES_FL.index(tonic.capitalize())
             self.scale = PITCHES_FL[start:] + PITCHES_FL[:start]
         else:
-            start = PITCHES_SH.index(tonic[0].upper() + tonic[1:])
+            start = PITCHES_SH.index(tonic.capitalize())
             self.scale = PITCHES_SH[start:] + PITCHES_SH[:start]
 
     def chromatic(self):
