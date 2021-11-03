@@ -29,7 +29,7 @@ def decode(ciphered_text, a, b):
     a_inv = pow(a, -1, M)
 
     plain_text = ""
-    for ch in ciphered_text.lower().replace(' ', ''):
+    for ch in ciphered_text.lower():
         if ch in ALPHABET:
             plain_text += NUMALPH[(a_inv * (ALPHNUM[ch] - b)) % M]
         elif ch.isnumeric():
