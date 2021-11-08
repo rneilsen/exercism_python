@@ -13,14 +13,14 @@ class ConnectGame:
 
         valid_neighbours = set(product(
                 range(max(0, row - 1), 1 + min(self.height - 1, row + 1)),
-                range(max(0, col - 1), 1 + min(self.width - 1, col + 1)) 
+                range(max(0, col - 1), 1 + min(self.width - 1, col + 1))
         ))
 
         return standard_neighbours.intersection(valid_neighbours)
 
 
     def are_groups_connected_by(self, symbol, set1, set2):
-        """Tests whether there is a contiguous block of cells containing a 
+        """Tests whether there is a contiguous block of cells containing a
         given symbol that contains cells in both groups"""
         set1 = {(r, c) for (r, c) in set1 if self.board[r][c] == symbol}
         set2 = {(r, c) for (r, c) in set2 if self.board[r][c] == symbol}
@@ -33,6 +33,12 @@ class ConnectGame:
             check_queue = {check_cell}
 
             while len(check_queue) > 0:
+                # priority_queue = check_queue & set2
+                # if len(priority_queue) > 0:
+                #     check_row, check_col = priority_queue.pop()
+                # else:
+                #     check_row, check_col = check_queue.pop()
+
                 check_row, check_col = check_queue.pop()
                 checked_cells.add((check_row, check_col))
 
