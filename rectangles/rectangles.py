@@ -1,7 +1,7 @@
 def rectangles(strings):
     if len(strings) == 0: return 0
 
-    (height, width) = (len(strings), len(strings[0]))
+    height, width = len(strings), len(strings[0])
     num = 0
 
     for row_num in range(height):
@@ -41,16 +41,3 @@ def rectangles_below(rows):
             # one or the other side is broken, abandon this block
             return num
     return num
-
-print(rectangles(
-                [
-                    "+---+--+----+",
-                    "|   +--+----+",
-                    "+---+--+    |",
-                    "|   +--+----+",
-                    "+---+--+--+-+",
-                    "+---+--+--+-+",
-                    "+------+  | |",
-                    "          +-+",
-                ]
-            ))
