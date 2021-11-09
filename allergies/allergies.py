@@ -17,18 +17,18 @@ class Allergies:
         n = 0
         while score >= 2**n:
             n += 1
-        
+
         # subtract all powers of 2 in descending order, and note allergies
         self.allergies = []
         while n >= 0:
             if score >= 2**n:
-                score = score - 2**n
+                score -= 2**n
                 if n in VALS:
                     self.allergies.append(VALS[n])
-            n = n-1
+            n -= 1
 
     def allergic_to(self, item):
-        return (item in self.allergies)
+        return item in self.allergies
 
     @property
     def lst(self):
