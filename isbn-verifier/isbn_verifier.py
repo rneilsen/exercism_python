@@ -1,4 +1,5 @@
 def is_valid(isbn):
+    """Determines whether a given ISBN-format number is valid"""
     scrubbed = isbn.replace('-', '')
 
     if len(scrubbed) != 10:
@@ -15,4 +16,5 @@ def is_valid(isbn):
     else:
         return False
 
-    return (sum([x*i for (x,i) in zip(digits, range(10,0,-1))]) % 11 == 0)
+    isbn_checksum = sum([x*i for (x,i) in enumerate(digits[::-1], start=1)])
+    return isbn_checksum % 11 == 0
