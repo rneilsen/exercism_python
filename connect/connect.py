@@ -1,6 +1,8 @@
 from itertools import product
 
 class ConnectGame:
+    """Internally represents a Connect game board as given in string form"""
+
     def __init__(self, board):
         self.board = [row.strip().split(' ') for row in board.splitlines()]
         self.height = len(self.board)
@@ -8,8 +10,11 @@ class ConnectGame:
 
 
     def get_neighbours(self, row, col):
-        standard_steps = {(-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0)}
-        potential_neighbours = {(row + rstep, col + cstep) for (rstep, cstep) in standard_steps}
+        """Returns the valid hexagonal neighbouring cells of a given cell"""
+
+        hex_adj_steps = {(-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0)}
+        potential_neighbours = {(row + rstep, col + cstep) 
+                                for (rstep, cstep) in hex_adj_steps}
 
         neighbours = set()
         for (r, c) in potential_neighbours:
@@ -22,6 +27,7 @@ class ConnectGame:
     def are_groups_connected_by(self, symbol, set1, set2):
         """Tests whether there is a contiguous block of cells containing a
         given symbol that contains cells in both groups"""
+
         set1 = {(r, c) for (r, c) in set1 if self.board[r][c] == symbol}
         set2 = {(r, c) for (r, c) in set2 if self.board[r][c] == symbol}
 
@@ -33,6 +39,7 @@ class ConnectGame:
             check_queue = {check_cell}
 
             while len(check_queue) > 0:
+                # prioritise check_queue cells that are in set2, if any
                 priority_queue = check_queue & set2
                 if len(priority_queue) > 0:
                     check_row, check_col = priority_queue.pop()
@@ -55,6 +62,8 @@ class ConnectGame:
 
 
     def get_winner(self):
+        """Returns a string of the winning piece, or empty string if none"""
+
         # Check for O win (top to bottom)
         top_row = {(0,i) for i in range(self.width)}
         bottom_row = {(self.height - 1, i) for i in range(self.width)}
@@ -67,5 +76,4 @@ class ConnectGame:
         if self.are_groups_connected_by('X', left_col, right_col):
             return 'X'
 
-        # No win yet
-        return ''
+        return ''       # No win yet
