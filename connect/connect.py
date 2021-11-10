@@ -1,19 +1,20 @@
-from itertools import product
+from typing import Set, Tuple
+Cell = Tuple[int, int]
 
 class ConnectGame:
     """Internally represents a Connect game board as given in string form"""
 
-    def __init__(self, board):
+    def __init__(self, board: str) -> None:
         self.board = [row.strip().split(' ') for row in board.splitlines()]
         self.height = len(self.board)
         self.width = len(self.board[0])
 
 
-    def get_neighbours(self, row, col):
+    def get_neighbours(self, row: int, col: int) -> Set[Cell]:
         """Returns the valid hexagonal neighbouring cells of a given cell"""
 
         hex_adj_steps = {(-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0)}
-        potential_neighbours = {(row + rstep, col + cstep) 
+        potential_neighbours = {(row + rstep, col + cstep)
                                 for (rstep, cstep) in hex_adj_steps}
 
         neighbours = set()
@@ -24,7 +25,8 @@ class ConnectGame:
         return neighbours
 
 
-    def are_groups_connected_by(self, symbol, set1, set2):
+    def are_groups_connected_by(self,
+            symbol: str, set1: Set[Cell], set2: Set[Cell]) -> bool:
         """Tests whether there is a contiguous block of cells containing a
         given symbol that contains cells in both groups"""
 
@@ -61,7 +63,7 @@ class ConnectGame:
         return False
 
 
-    def get_winner(self):
+    def get_winner(self) -> str:
         """Returns a string of the winning piece, or empty string if none"""
 
         # Check for O win (top to bottom)
