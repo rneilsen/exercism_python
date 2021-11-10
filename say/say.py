@@ -11,7 +11,7 @@ powers = {0: '', 3: 'thousand', 6: 'million', 9: 'billion'}
 def say(number):
     """Returns the English name of a given integer"""
     if not (0 <= number < 10**12):
-        raise ValueError("Number out of range")
+        raise ValueError("input out of range")
     if number == 0:
         return 'zero'
 
