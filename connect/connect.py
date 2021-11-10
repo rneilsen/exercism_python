@@ -33,13 +33,12 @@ class ConnectGame:
             check_queue = {check_cell}
 
             while len(check_queue) > 0:
-                # priority_queue = check_queue & set2
-                # if len(priority_queue) > 0:
-                #     check_row, check_col = priority_queue.pop()
-                # else:
-                #     check_row, check_col = check_queue.pop()
+                priority_queue = check_queue & set2
+                if len(priority_queue) > 0:
+                    check_row, check_col = priority_queue.pop()
+                else:
+                    check_row, check_col = check_queue.pop()
 
-                check_row, check_col = check_queue.pop()
                 checked_cells.add((check_row, check_col))
 
                 if self.board[check_row][check_col] == symbol:
