@@ -9,14 +9,14 @@ class ConnectGame:
 
     def get_neighbours(self, row, col):
         standard_steps = {(-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0)}
-        standard_neighbours = {(row + rstep, col + cstep) for (rstep, cstep) in standard_steps}
+        potential_neighbours = {(row + rstep, col + cstep) for (rstep, cstep) in standard_steps}
 
-        valid_neighbours = set(product(
-                range(max(0, row - 1), 1 + min(self.height - 1, row + 1)),
-                range(max(0, col - 1), 1 + min(self.width - 1, col + 1))
-        ))
+        neighbours = set()
+        for (r, c) in potential_neighbours:
+            if 0 <= r < self.height and 0 <= c < self.width:
+                neighbours.add((r,c))
 
-        return standard_neighbours.intersection(valid_neighbours)
+        return neighbours
 
 
     def are_groups_connected_by(self, symbol, set1, set2):
