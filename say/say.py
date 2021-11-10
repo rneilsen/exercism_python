@@ -15,26 +15,15 @@ def say(number):
     if number == 0:
         return 'zero'
 
-    words = rec_say(number)
-    while '' in words:
-        words.remove('')
+    words = []
+    p = 0
+    while number > 0:
+        if number % 1000 != 0:
+            words = block_name(number % 1000) + [powers[p]] + words
+        p += 3
+        number //= 1000
 
-    return ' '.join(words)
-
-
-def rec_say(number):
-    """Constructs the name of a positive integer as a list of words"""
-    if number == 0:
-        return []
-
-    n = 0
-    while number >= 1000**(n+1):
-        n += 1
-
-    this_block = number // (1000**n)
-    remainder = number % 1000**n
-
-    return block_name(this_block) + [powers[3*n]] + rec_say(remainder)
+    return ' '.join([word for word in words if word != ''])
 
 
 def block_name(number):
