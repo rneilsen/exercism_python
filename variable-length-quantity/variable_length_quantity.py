@@ -21,7 +21,7 @@ def encode(numbers):
 
 def decode(bytes_):
     if bytes_[-1] >= 128:
-        raise ValueError("Last byte must have first bit 0")
+        raise ValueError("incomplete sequence")
 
     output = []
     num_constructor = []
