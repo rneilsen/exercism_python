@@ -16,13 +16,12 @@ def say(number):
         return 'zero'
 
     words = []
-    p = 0
-    while number > 0:
+
+    for p in range(0, len(str(number)), 3):
         if number % 1000 != 0:
             words = block_name(number % 1000) + [powers[p]] + words
-        p += 3
         number //= 1000
-
+ 
     return ' '.join([word for word in words if word != ''])
 
 
