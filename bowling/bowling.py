@@ -15,20 +15,20 @@ class BowlingGame:
     def roll(self, pins):
         if self.game_over:
             raise Exception("Extra bowls not allowed")
-
-        if not (0 <= pins <= NUM_PINS): 
+        if not 0 <= pins <= NUM_PINS:
             raise Exception("Invalid pinfall")
-
         if self.frame_prev is not None and self.frame_prev + pins > NUM_PINS:
             raise Exception("Invalid frame total")
-        
+
+        # Add pins using bonus multiplier from previous strikes & spares
         mult = self.multipliers.popleft()
         self.multipliers.append(1)
         self.total += mult * pins
-        
-        if self.cur_frame == NUM_FRAMES:    # Last frame
+
+        # Special handling for the last frame (skips multiplier incrementing)
+        if self.cur_frame == NUM_FRAMES:
             self.last_frame_bowls.append(pins)
-            
+
             if len(self.last_frame_bowls) == 3:
                 self.game_over = True
             elif len(self.last_frame_bowls) == 2:
@@ -39,11 +39,12 @@ class BowlingGame:
                     self.frame_prev = None
                 else:
                     self.game_over = True
-            elif len(self.last_frame_bowls) == 1:
+            else:
                 if pins < NUM_PINS:
                     self.frame_prev = pins
             return
-        
+
+        # Multiplier incrementing for strikes & spares
         if self.frame_prev is not None:
             # this is the second bowl of a frame
             if self.frame_prev + pins == NUM_PINS:
@@ -62,13 +63,3 @@ class BowlingGame:
 
     def score(self):
         return self.total
-
-
-# game = BowlingGame()
-# testrolls = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 10, 6]
-# for roll in testrolls:
-#     if roll == 10:
-#         pass
-#     game.roll(roll)
-
-# print(game.score())
