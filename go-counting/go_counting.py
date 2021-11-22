@@ -1,4 +1,6 @@
 from itertools import product
+from typing import Set, Tuple, Dict
+Coords = Tuple[int, int]
 
 WHITE = 'W'
 BLACK = 'B'
@@ -11,21 +13,21 @@ class Board:
         board (list[str]): A two-dimensional Go board
     """
 
-    def __init__(self, board):
+    def __init__(self, board: str) -> None:
         self.rows = [[(NONE if ch==' ' else ch) for ch in row] for row in board]
         self.width = len(board[0])
         self.height = len(board)
         self.valid_spaces = set(product(range(self.width), range(self.height)))
 
-    def get_space(self, x, y):
+    def get_space_content(self, x: int, y: int) -> str:
         """Returns the content of a specific space on the board ('B', 'W', or '')"""
         return self.rows[y][x]
 
-    def get_neighbours(self, x, y):
+    def get_neighbours(self, x: int, y: int) -> Set[Coords]:
         """Returns a set of the valid neighbours, as (x,y) tuples, of the given space"""
         return {(x-1,y), (x+1,y), (x,y+1), (x,y-1)}.intersection(self.valid_spaces)
 
-    def territory(self, x, y):
+    def territory(self, x: int, y: int) -> Tuple[str, Set[Coords]]:
         """Find the owner and the territories given a coordinate on
            the board
 
@@ -40,32 +42,31 @@ class Board:
                         the owner's territories.
         """
         if (x,y) not in self.valid_spaces:
-            raise ValueError("Invalid coordinates")
+            raise ValueError("Invalid coordinate")
 
-        if self.get_space(x,y) != '': 
+        if self.get_space_content(x,y) != '':
             # designated space is a stone, not open territory
             return (NONE, set())
-        
+
         checked = {(x,y)}
         terr = checked.copy()
-        unchecked = self.get_neighbours(x,y)
+        check_queue = self.get_neighbours(x,y)
         owners = set()
-        while len(unchecked) > 0:
-            space = unchecked.pop()
-            space_cont = self.get_space(*space)
+        while len(check_queue) > 0:
+            space = check_queue.pop()
+            space_cont = self.get_space_content(*space)
             if space_cont == NONE:
-                unchecked.update(self.get_neighbours(*space).difference(checked))
+                check_queue.update(self.get_neighbours(*space) - checked)
                 terr.add(space)
             else:
                 owners.add(space_cont)
             checked.add(space)
         if len(owners) == 1:
             return (owners.pop(), terr)
-        else:
-            return (NONE, terr)
+        return (NONE, terr)
 
 
-    def territories(self):
+    def territories(self) -> Dict[str, Set[Coords]]:
         """Find the owners and the territories of the whole board
 
         Args:
@@ -84,4 +85,3 @@ class Board:
             terrs[owner].update(terr)
             unchecked.difference_update(terr)
         return terrs
-
