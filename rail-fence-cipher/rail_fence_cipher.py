@@ -1,4 +1,4 @@
-from typing import List, Sequence, Generator
+from typing import Sequence, Generator
 
 def encode(message: str, num_rails: int) -> str:
     """Use a rail-fence cipher to encipher a given message"""
@@ -29,7 +29,7 @@ def decode(encoded_message: str, num_rails: int) -> str:
                         for _ in range(len(encoded_message)) ])
 
 
-def split_by_sizes(to_split: Sequence, sizes: List[int]) -> List[Sequence]:
+def split_by_sizes(to_split: Sequence, sizes: list[int]) -> list[Sequence]:
     """Return a list of Sequences consisting of the given Sequence split into
     consecutive chunks of sizes in the given list of sizes
     e.g. split_by_sizes('abcdef', [2,1,3]) -> ['ab', 'c', 'def'] """
@@ -39,14 +39,14 @@ def split_by_sizes(to_split: Sequence, sizes: List[int]) -> List[Sequence]:
 def rail_cycler(num_rails: int) -> Generator[int, None, None]:
     """Generator yielding an integer that zigzags from 0 to num_rails and back"""
     cur_rail = 0
-    cur_step = 1
+    zig_down = True
 
     while True:
         yield cur_rail
-        cur_rail += cur_step
+        cur_rail += (1 if zig_down else -1)
 
         # reverse direction if we hit top or bottom rail
         if cur_rail == 0:
-            cur_step = 1
+            zig_down = True
         elif cur_rail == num_rails - 1:
-            cur_step = -1
+            zig_down = False
