@@ -1,4 +1,4 @@
-from typing import Sequence, Generator
+from collections.abc import Sequence, Generator
 
 def encode(message: str, num_rails: int) -> str:
     """Use a rail-fence cipher to encipher a given message"""
