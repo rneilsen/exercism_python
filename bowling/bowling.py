@@ -79,4 +79,6 @@ class BowlingGame:
 
 
     def score(self):
-        return self.total
+        if self.game_over:
+            return self.total
+        raise Exception("Game cannot be scored whilst incomplete")
